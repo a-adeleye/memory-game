@@ -2,6 +2,55 @@
   text-align: center;
 }
 
+body {
+  height: 100vh;
+  background: url("bg.jpg") no-repeat center/cover;
+}
+
+header {
+  height: 6em;
+  background-color: #110c2a;
+  display: flex;
+  padding: 0 2em;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  min-width: 27em;
+}
+
+.logo--image {
+  height: 3.3em;
+  width: 3.3em;
+  margin-right: 1em;
+  border-radius: 50%;
+}
+
+.score-board {
+  display: flex;
+  align-items: center;
+  min-width: 14em;
+  justify-content: space-between;
+  margin-right: 1em;
+}
+
+.score-board--separator {
+  background-color: #d047f7;
+  padding: 2em 0.1em;
+}
+
+.score-board--score {
+  color: #f1aaf8;
+}
+
+.score-board--best {
+  color: #8343fe;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
