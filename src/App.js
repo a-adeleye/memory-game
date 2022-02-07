@@ -102,8 +102,8 @@ function App() {
     console.log(isClicked)
   }
 
-  function increase() {
-    setLevel(level + 1);
+  function restart() {
+    setLevel(1);
   }
 
   function decrease() {
@@ -120,7 +120,7 @@ function App() {
         level={level}
         onClick={shuffleCurrentDeck}
       ></Gameboard>
-      <button onClick={increase}>Increase level</button>
+      <button onClick={restart}>Increase level</button>
       <button onClick={shuffleCurrentDeck}>Shuffle Deck</button>
     </div>
   );
