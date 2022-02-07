@@ -16,7 +16,7 @@ import yemoja from "./goddess/yemoja.jpg";
 import cliodhna from "./goddess/cliodhna.jpg";
 
 const Goddess = [
-  { name: "aphrodite", url: aphrodite, isClicked: false },
+  { name: "aphrodite", url: aphrodite, isClicked: false},
   { name: " awilix", url: awilix, isClicked: false },
   { name: "bastet", url: bastet, isClicked: false },
   { name: "chang'e", url: change, isClicked: false },

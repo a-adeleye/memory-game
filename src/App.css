@@ -96,6 +96,7 @@ header {
 .card {
   width: 140px;
   border: 3px solid white;
+  cursor: pointer;
 }
 
 .card--image {
