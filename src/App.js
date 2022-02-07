@@ -1,5 +1,7 @@
+import React from "react";
+import { nanoid } from "nanoid";
 import goddessLogo from "./goddess-logo.jpg";
-import awilix from './goddess/awilix.jpg';
+import Goddess from "./Images";
 import "./App.css";
 
 function Header() {
@@ -18,83 +20,51 @@ function Header() {
   );
 }
 
-function Gameboard() {
+function Gameboard(props) {
+  const cards = props.deck.map((card) => (
+    <div key={nanoid()} className="card">
+      <div className="card--image">
+        <img src={card.url} alt="name" />
+      </div>
+      <h4 className="card-description">{card.name}</h4>
+    </div>
+  ));
+
   return (
     <section className="gameboard">
-      <h1 className="level">Level 1</h1>
-
-      <div className="cards">
-        <div className="card">
-          <div className="card--image">
-            <img src={awilix} alt="name" />
-          </div>
-
-          <h4 className="card-description">Yemoja</h4>
-        </div>
-        
-        <div className="card">
-          <div className="card--image">
-            <img src={awilix} alt="name" />
-          </div>
-
-          <h4 className="card-description">Yemoja</h4>
-        </div>
-        <div className="card">
-          <div className="card--image">
-            <img src={awilix} alt="name" />
-          </div>
-
-          <h4 className="card-description">Yemoja</h4>
-        </div>
-
-        <div className="card">
-          <div className="card--image">
-            <img src={awilix} alt="name" />
-          </div>
-
-          <h4 className="card-description">Yemoja</h4>
-        </div>
-
-        <div className="card">
-          <div className="card--image">
-            <img src={awilix} alt="name" />
-          </div>
-
-          <h4 className="card-description">Yemoja</h4>
-        </div>
-
-        <div className="card">
-          <div className="card--image">
-            <img src={awilix} alt="name" />
-          </div>
-
-          <h4 className="card-description">Yemoja</h4>
-        </div>
-        <div className="card">
-          <div className="card--image">
-            <img src={awilix} alt="name" />
-          </div>
-
-          <h4 className="card-description">Yemoja</h4>
-        </div>
-        <div className="card">
-          <div className="card--image">
-            <img src={awilix} alt="name" />
-          </div>
-
-          <h4 className="card-description">Yemoja</h4>
-        </div>
-   
-      </div>
+      <h1 className="level">Level {props.level}</h1>
+      <div className="cards">{cards}</div>
     </section>
   );
 }
 
 function App() {
+
+  const [level, setLevel] = React.useState(1);
+
+  function shuffledArrayOfCards() {
+    const array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+
+    for (let i = array.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+
+    const newArray = array.slice(0, 4);
+
+    return newArray.map((num) => Goddess[num]);
+  }
+
+  React.useEffect(() => {
+    setDeck(shuffledArrayOfCards());
+  }, []);
+
+  const [deck, setDeck] = React.useState([]);
+
   return (
     <div className="App">
       <Header></Header>
-      <Gameboard></Gameboard>
+      <Gameboard deck={deck} level={level}></Gameboard>
     </div>
   );
 }
