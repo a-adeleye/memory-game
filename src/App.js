@@ -3,12 +3,15 @@ import Header from "./components/Header";
 import Gameboard from "./components/Gameboard";
 import Goddess from "./components/Images";
 import "./App.css";
+import LevelComplete from "./components/LevelComplete";
 
 function App() {
   const [deck, setDeck] = React.useState([]);
   const [score, setScore] = React.useState(0);
   const [gameRecord, setGameRecord] = React.useState([]);
   const [level, setLevel] = React.useState(1);
+  const [levelComplete, setLevelComplete] = React.useState(false);
+  const [shuffler, setShuffler] = React.useState(1);
 
   function shuffledArrayOfCards() {
     const array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
@@ -21,11 +24,9 @@ function App() {
     setDeck(shuffledArrayOfCards());
   }, [level]);
 
-  const [shuffler, setShuffler] = React.useState(1);
-
   React.useEffect(() => {
     checkLevelComplete();
-  }, [shuffler, score]);
+  }, [score]);
 
   function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -35,20 +36,19 @@ function App() {
     return array;
   }
 
-  function shuffleCurrentDeck(id, isClicked) {
+  function handleClick(id, isClicked) {
     setShuffler(shuffler + 1);
     if (isClicked) {
       console.log("gameover");
       return;
     }
-    console.log(id);
-    console.log(isClicked);
     setDeck(shuffle(deck));
     setDeck((prevDeck) =>
       prevDeck.map((card) =>
         card.name === id ? { ...card, isClicked: true } : card
       )
     );
+    calculateScore();
   }
 
   function checkLevelComplete() {
@@ -56,8 +56,8 @@ function App() {
       return;
     }
     if (deck.every((card) => card.isClicked === true)) {
-      incrreaseLevel();
-      calculateScore();
+      showLevelComplete();
+      increaseLevel();
       saveGame();
     }
   }
@@ -66,22 +66,19 @@ function App() {
     setGameRecord([...gameRecord, score]);
   }
 
-  function incrreaseLevel() {
+  function increaseLevel() {
     setLevel(level + 1);
   }
 
   const bestScore = gameRecord.length > 0 && Math.max(...gameRecord);
 
-  function checkDoubleClick(isClicked) {
-    console.log(isClicked);
-  }
-
-  function restart() {
-    setLevel(1);
+  function showLevelComplete() {
+    setLevelComplete(true);
+    setTimeout(() => setLevelComplete(false), 3000);
   }
 
   function calculateScore() {
-    setScore(level * (level * 2 + 2));
+    setScore(score + level);
   }
 
   console.log(deck);
@@ -94,10 +91,10 @@ function App() {
       <Gameboard
         deck={deck}
         level={level}
-        onClick={shuffleCurrentDeck}
+        onClick={handleClick}
       ></Gameboard>
-      <button onClick={restart}>Increase level</button>
-      <button onClick={shuffleCurrentDeck}>Shuffle Deck</button>
+
+      {levelComplete && <LevelComplete level={level - 1} />}
     </div>
   );
 }
