@@ -106,8 +106,7 @@ header {
   margin-top: -0.4em;
 }
 
-.levelComplete,
-.game-over {
+.modal-container {
   position: fixed;
   inset: 0 0 0 0;
   background-color: rgba(8, 0, 21, 0);
@@ -124,17 +123,15 @@ header {
   justify-content: space-evenly;
   border-radius: 1em;
   transition: 0.4s;
-  height: 70%;
-  width: 40%;
+  height: 80%;
+  width: 80%;
   background-color: #110c2a;
-  overflow: hidden;
-}
-
-.modal {
   font-size: 1.5em;
+  padding: 1em 3em;
+  margin-top: 3em;
 }
 
-.game-over--button {
+.modal--button {
   padding: 1em 2em;
   cursor: pointer;
   background-color: #ea1b4e;
@@ -143,30 +140,40 @@ header {
   font-size: large;
 }
 
-.game-over--button:hover {
+.modal--button:hover {
   transform: scale(1.02);
 }
 
-.game-over--button:active {
+.modal--button:active {
   transform: scale(0.9);
 }
 
-.level-complete--title,
-.game-over--title {
+.modal--title {
   color: #fdcc18;
 }
 
-.level-complete--image {
-  animation: level-complete--image-spin infinite 20s linear;
+.modal--image {
+  animation: modal--image-spin infinite 20s linear;
+}
+
+.modal--text {
+  color: #9ec4c2;
+  text-align: center;
+}
+
+.modal select {
+  padding: 1em 3em;
+  cursor: pointer;
+  font-size: 0.7em;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .level-complete--image {
-    animation: level-complete--image-spin infinite 1s linear;
+  .modal--image {
+    animation: modal--image-spin infinite 1s linear;
   }
 }
 
-@keyframes level-complete--image-spin {
+@keyframes modal--image-spin {
   from {
     transform: rotate(0deg);
   }

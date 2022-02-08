@@ -3,10 +3,10 @@ import rubik from "../rubik.png";
 
 export default function LevelComplete(props) {
   return (
-    <div className="levelComplete">
+    <div className="modal-container">
       <div className="modal">
-        <h2 className="level-complete--title">Level {props.level} completed</h2>
-        <img className="level-complete--image" alt="" src={rubik} />
+        <h2 className="modal--title">Level {props.level - 1} completed</h2>
+        <img className="modal--image" alt="" src={rubik} />
       </div>
     </div>
   );

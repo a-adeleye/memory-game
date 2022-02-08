@@ -15,7 +15,7 @@ import eset from "./goddess/eset.jpg";
 import yemoja from "./goddess/yemoja.jpg";
 import cliodhna from "./goddess/cliodhna.jpg";
 
-const Goddess = [
+export const Goddess = [
   { name: "aphrodite", url: aphrodite, isClicked: false},
   { name: " awilix", url: awilix, isClicked: false },
   { name: "bastet", url: bastet, isClicked: false },
@@ -34,4 +34,21 @@ const Goddess = [
   { name: "yemoja", url: yemoja, isClicked: false },
 ];
 
-export default Goddess;
+export const God = [
+  { name: "aphrodite2", url: aphrodite, isClicked: false},
+  { name: " awilix2", url: awilix, isClicked: false },
+  { name: "bastet2", url: bastet, isClicked: false },
+  { name: "chang'e2", url: change, isClicked: false },
+  { name: "cliodhna2", url: cliodhna, isClicked: false },
+  { name: "eset2", url: eset, isClicked: false },
+  { name: "mulan2", url: mulan, isClicked: false },
+  { name: "ne_za2", url: ne_za, isClicked: false },
+  { name: "neith2", url: neith, isClicked: false },
+  { name: "nemesis2", url: nemesis, isClicked: false },
+  { name: "nox2", url: nox, isClicked: false },
+  { name: "pele2", url: pele, isClicked: false },
+  { name: "persephone2", url: persephone, isClicked: false },
+  { name: "serqet2", url: serqet, isClicked: false },
+  { name: "sol2", url: sol, isClicked: false },
+  { name: "yemoja2", url: yemoja, isClicked: false },
+];
