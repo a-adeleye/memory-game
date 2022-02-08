@@ -47,8 +47,6 @@ function App() {
     }
   }
 
-console.log(bestScore)
-
   function updateBestScoreToStorage() {
     const newData = JSON.stringify({ ...data, best: bestScore });
     localStorage.setItem("data", newData);
@@ -124,7 +122,7 @@ console.log(bestScore)
       return;
     }
     if (deck.every((card) => card.isClicked === true)) {
-      if (level === 2) {
+      if (level === 7) {
         setGameComplete(true);
       } else {
         showLevelComplete();
