@@ -3,7 +3,7 @@ import React from "react";
 export default function GameComplete(props) {
   return (
     <div className="modal-container">
-      <div className="modal">
+      <div className="modal" style={{height: "90%"}}>
         <h2 className="modal--title">Congratulations!!!</h2>
         <p className="modal--text">You have completed the quest. You must be a genius.</p>
         <h3 className="level">Level: {props.level}</h3>
@@ -12,7 +12,7 @@ export default function GameComplete(props) {
         <button className="modal--button" onClick={props.onClick}>
           Play Again
         </button>
-        <button className="modal--button" onClick={props.onClick}>
+        <button className="modal--button" onClick={props.changeGameMode}>
           Change mode
         </button>
       </div>

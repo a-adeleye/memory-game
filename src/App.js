@@ -43,7 +43,12 @@ function App() {
     if(gameOver){
       setGameOver(false);
     }
-    setGameMode(prevValue => prevValue = !prevValue)
+    if(gameComplete){
+      setGameComplete(false);
+      setLevel(1);
+      setScore(0);
+    }
+    setGameMode(prevValue => prevValue = !prevValue);
   }
 
 console.log(mode)
@@ -94,7 +99,7 @@ console.log(deck)
       return;
     }
     if (deck.every((card) => card.isClicked === true)) {
-      if (level === 7) {
+      if (level === 2) {
         setGameComplete(true);
         return;
       }
@@ -128,12 +133,24 @@ console.log(deck)
     gameComplete && setGameComplete(false);
   }
 
+  function resetGame() {
+    setScore(0);
+    setLevel(1);
+    setGameMode(false)
+    setGameOver(false);
+    setGameComplete(false)
+    setLevelComplete(false)
+    setShuffler(1);
+    setDeck(shuffledArrayOfCards());
+  }
+  
+
   return (
     <div className="App">
       <Header score={score} bestScore={bestScore}></Header>
       <Gameboard deck={deck} level={level} onClick={handleClick}></Gameboard>
       {firstTime && <Instruction onClick={handleFirstTime}/>}
-      {gameMode && <GameMode onClick={handleGameMode} onChange={handleModeChange}/>}
+      {gameMode && <GameMode onClick={resetGame} onChange={handleModeChange}/>}
 
       {levelComplete && <LevelComplete level={level} />}
 
@@ -153,10 +170,10 @@ console.log(deck)
           score={score}
           best={bestScore}
           onClick={restartGame}
+          changeGameMode={handleGameMode}
         />
       )}
       {gameComplete && <Confetti />}
-      {firstTime && <Instruction onClick={handleFirstTime}/>}
     </div>
   );
 }
