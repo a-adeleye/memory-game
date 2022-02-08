@@ -9,9 +9,9 @@ export default function Header(props) {
           <h2 className="logo--title">Goddess Memory Game</h2>
         </div>
         <div className="score-board">
-          <h3 className="score-board--score">Score: {props.score}</h3>
+          <h3 className="score">Score: {props.score}</h3>
           <div className="score-board--separator"></div>
-          <h3 className="score-board--best">Best: {props.bestScore}</h3>
+          <h3 className="best">Best: {props.bestScore}</h3>
         </div>
       </header>
     );

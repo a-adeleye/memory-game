@@ -6,6 +6,7 @@
 
 html {
   background: url("bg.jpg") no-repeat center/cover;
+  transition: 0.4s;
 }
 
 header {
@@ -54,11 +55,11 @@ header {
   padding: 2em 0.1em;
 }
 
-.score-board--score {
+.score {
   color: #f1aaf8;
 }
 
-.score-board--best {
+.best {
   color: #8343fe;
 }
 
@@ -68,7 +69,6 @@ header {
   width: 100%;
   height: 100vh;
   background-color: rgba(8, 0, 21, 0.8);
-  /* opacity: 0.8; */
 }
 
 .level {
@@ -106,24 +106,53 @@ header {
   margin-top: -0.4em;
 }
 
-.levelComplete {
-  position: absolute;
-  width: 50%;
-  height: 70%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.levelComplete,
+.game-over {
+  position: fixed;
+  inset: 0 0 0 0;
+  background-color: rgba(8, 0, 21, 0);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2em;
-  border-radius: 1em;
-  background-color: #110c2a;
-  transition: 0.4s;
 }
 
-.level-complete--title {
+.modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  border-radius: 1em;
+  transition: 0.4s;
+  height: 70%;
+  width: 40%;
+  background-color: #110c2a;
+  overflow: hidden;
+}
+
+.modal {
+  font-size: 1.5em;
+}
+
+.game-over--button {
+  padding: 1em 2em;
+  cursor: pointer;
+  background-color: #ea1b4e;
+  color: #ffffff;
+  border: none;
+  font-size: large;
+}
+
+.game-over--button:hover {
+  transform: scale(1.02);
+}
+
+.game-over--button:active {
+  transform: scale(0.9);
+}
+
+.level-complete--title,
+.game-over--title {
   color: #fdcc18;
 }
 

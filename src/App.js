@@ -4,6 +4,8 @@ import Gameboard from "./components/Gameboard";
 import Goddess from "./components/Images";
 import "./App.css";
 import LevelComplete from "./components/LevelComplete";
+import GameOver from "./components/GameOver";
+//import { Transition } from 'react-transition-group';
 
 function App() {
   const [deck, setDeck] = React.useState([]);
@@ -12,6 +14,7 @@ function App() {
   const [level, setLevel] = React.useState(1);
   const [levelComplete, setLevelComplete] = React.useState(false);
   const [shuffler, setShuffler] = React.useState(1);
+  const [gameOver, setGameOver] = React.useState(false);
 
   function shuffledArrayOfCards() {
     const array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
@@ -22,10 +25,13 @@ function App() {
 
   React.useEffect(() => {
     setDeck(shuffledArrayOfCards());
+    console.log(27);
   }, [level]);
 
   React.useEffect(() => {
     checkLevelComplete();
+    saveGame();
+    console.log(32);
   }, [score]);
 
   function shuffle(array) {
@@ -39,7 +45,7 @@ function App() {
   function handleClick(id, isClicked) {
     setShuffler(shuffler + 1);
     if (isClicked) {
-      console.log("gameover");
+      setGameOver(true);
       return;
     }
     setDeck(shuffle(deck));
@@ -49,7 +55,10 @@ function App() {
       )
     );
     calculateScore();
+    saveGame();
   }
+
+  console.log(gameOver);
 
   function checkLevelComplete() {
     if (!deck.length) {
@@ -57,8 +66,6 @@ function App() {
     }
     if (deck.every((card) => card.isClicked === true)) {
       showLevelComplete();
-      increaseLevel();
-      saveGame();
     }
   }
 
@@ -74,11 +81,18 @@ function App() {
 
   function showLevelComplete() {
     setLevelComplete(true);
-    setTimeout(() => setLevelComplete(false), 3000);
+    setTimeout(() => setLevelComplete(false), 2000);
   }
 
   function calculateScore() {
     setScore(score + level);
+  }
+
+  function restartGame() {
+    setLevel(1);
+    setScore(0);
+    setDeck(shuffledArrayOfCards());
+    setGameOver(false);
   }
 
   console.log(deck);
@@ -88,13 +102,17 @@ function App() {
   return (
     <div className="App">
       <Header score={score} bestScore={bestScore}></Header>
-      <Gameboard
-        deck={deck}
-        level={level}
-        onClick={handleClick}
-      ></Gameboard>
+      <Gameboard deck={deck} level={level} onClick={handleClick}></Gameboard>
 
-      {levelComplete && <LevelComplete level={level - 1} />}
+      {levelComplete && <LevelComplete level={level} />}
+      {gameOver && (
+        <GameOver
+          level={level}
+          score={score}
+          best={bestScore}
+          onClick={restartGame}
+        />
+      )}
     </div>
   );
 }
