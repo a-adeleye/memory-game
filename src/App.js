@@ -28,7 +28,7 @@ function App() {
   const data = { firstTime: false, best: [] };
 
   function checkFirstTimer() {
-    const data = JSON.parse(localStorage.getItem("data"));
+    const data = localStorage.getItem("data");
     if (!data) {
       return true;
     } else {
@@ -37,13 +37,17 @@ function App() {
   }
 
   function checkBestScore() {
-    const data = JSON.parse(localStorage.getItem("data"));
-    if (!data || !data.best.length) {
+    const data = localStorage.getItem("data");
+    if (data) {
+      let newData = JSON.parse(data);
+      return newData.best;
+    }
+    if (!data) {
       return [];
-    } else {
-      return data.best;
     }
   }
+
+console.log(bestScore)
 
   function updateBestScoreToStorage() {
     const newData = JSON.stringify({ ...data, best: bestScore });
@@ -51,7 +55,7 @@ function App() {
   }
 
   function handleFirstTime() {
-    localStorage.setItem("data", data);
+    localStorage.setItem("data", JSON.stringify(data));
     setFirstTime(false);
     setGameMode(true);
   }
