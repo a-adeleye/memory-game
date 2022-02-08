@@ -1,49 +1,13 @@
 import React from "react";
-import { nanoid } from "nanoid";
-import goddessLogo from "./goddess-logo.jpg";
-import Goddess from "./Images";
+import Header from "./components/Header";
+import Gameboard from "./components/Gameboard";
+import Goddess from "./components/Images";
 import "./App.css";
 
-function Header(props) {
-  return (
-    <header>
-      <div className="logo">
-        <img className="logo--image" alt="logo" src={goddessLogo} />
-        <h2 className="logo--title">Goddess Memory Game</h2>
-      </div>
-      <div className="score-board">
-        <h3 className="score-board--score">Score: {props.score}</h3>
-        <div className="score-board--separator"></div>
-        <h3 className="score-board--best">Best: 20</h3>
-      </div>
-    </header>
-  );
-}
-
-function Gameboard(props) {
-  const cards = props.deck.map((card) => (
-    <div
-      key={nanoid()}
-      className="card"
-      id={card.name}
-      onClick={() => props.onClick(card.name, card.isClicked)}
-    >
-      <div className="card--image">
-        <img src={card.url} alt="name" />
-      </div>
-      <h4 className="card-description">{card.name}</h4>
-    </div>
-  ));
-
-  return (
-    <section className="gameboard">
-      <h1 className="level">Level {props.level}</h1>
-      <div className="cards">{cards}</div>
-    </section>
-  );
-}
-
 function App() {
+  const [deck, setDeck] = React.useState([]);
+  const [score, setScore] = React.useState(0);
+  const [gameRecord, setGameRecord] = React.useState([]);
   const [level, setLevel] = React.useState(1);
 
   function shuffledArrayOfCards() {
@@ -53,8 +17,6 @@ function App() {
     return newArray.map((num) => Goddess[num]);
   }
 
-  const [deck, setDeck] = React.useState([]);
-
   React.useEffect(() => {
     setDeck(shuffledArrayOfCards());
   }, [level]);
@@ -63,7 +25,7 @@ function App() {
 
   React.useEffect(() => {
     checkLevelComplete();
-  }, [shuffler]);
+  }, [shuffler, score]);
 
   function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -75,34 +37,43 @@ function App() {
 
   function shuffleCurrentDeck(id, isClicked) {
     setShuffler(shuffler + 1);
-    if(isClicked){
+    if (isClicked) {
       console.log("gameover");
       return;
     }
     console.log(id);
-    console.log(isClicked)
+    console.log(isClicked);
     setDeck(shuffle(deck));
     setDeck((prevDeck) =>
-    prevDeck.map((card) =>
-      card.name === id ? { ...card, isClicked: true } : card
-    )
-  );
+      prevDeck.map((card) =>
+        card.name === id ? { ...card, isClicked: true } : card
+      )
+    );
   }
 
   function checkLevelComplete() {
-    if(!deck.length){
-      return
+    if (!deck.length) {
+      return;
     }
-    if(deck.every((card) => card.isClicked === true)){
-      setLevel(level + 1)
-      setScore(calculateScore())
+    if (deck.every((card) => card.isClicked === true)) {
+      incrreaseLevel();
+      calculateScore();
+      saveGame();
     }
   }
 
-  const [score, setScore] = React.useState(0);
+  function saveGame() {
+    setGameRecord([...gameRecord, score]);
+  }
+
+  function incrreaseLevel() {
+    setLevel(level + 1);
+  }
+
+  const bestScore = gameRecord.length > 0 && Math.max(...gameRecord);
 
   function checkDoubleClick(isClicked) {
-    console.log(isClicked)
+    console.log(isClicked);
   }
 
   function restart() {
@@ -110,15 +81,16 @@ function App() {
   }
 
   function calculateScore() {
-    return level * (level * 2 + 2)
+    setScore(level * (level * 2 + 2));
   }
 
-  console.log(deck)
-  console.log(score)
+  console.log(deck);
+  console.log(score);
+  console.log(gameRecord);
 
   return (
     <div className="App">
-      <Header score={score}></Header>
+      <Header score={score} bestScore={bestScore}></Header>
       <Gameboard
         deck={deck}
         level={level}
