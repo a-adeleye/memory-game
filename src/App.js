@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "./components/Header";
 import Gameboard from "./components/Gameboard";
-import {God, Goddess, Movies} from "./components/Images";
+import { God, Goddess, Movies } from "./components/Images";
 import "./App.css";
 import Instruction from "./components/Instruction";
 import GameMode from "./components/GameMode";
@@ -9,7 +9,6 @@ import LevelComplete from "./components/LevelComplete";
 import GameOver from "./components/GameOver";
 import GameComplete from "./components/GameComplete";
 import Confetti from "react-confetti";
-
 
 function App() {
   const [firstTime, setFirstTime] = React.useState(true);
@@ -28,29 +27,22 @@ function App() {
 
   function handleFirstTime() {
     setFirstTime(false);
-    setGameMode(true)
+    setGameMode(true);
   }
 
   function handleModeChange(e) {
-   setMode(images[e.target.value])
+    setMode(images[e.target.value]);
   }
 
-  function changeGameMode() {
-
-  }
-
-  function handleGameMode(){
-    if(gameOver){
+  function handleGameMode() {
+    if (gameOver) {
       setGameOver(false);
     }
-    if(gameComplete){
-      setGameComplete(false);
-      setLevel(1);
-      setScore(0);
+    if (gameComplete) {
+      resetGame()
     }
-    setGameMode(prevValue => prevValue = !prevValue);
+    setGameMode((prevValue) => (prevValue = !prevValue));
   }
-
 
   function shuffledArrayOfCards() {
     const array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
@@ -61,7 +53,7 @@ function App() {
 
   React.useEffect(() => {
     setDeck(shuffledArrayOfCards());
-  }, [level,mode]);
+  }, [level, mode]);
 
   React.useEffect(() => {
     checkLevelComplete();
@@ -93,16 +85,16 @@ function App() {
   }
 
   function checkLevelComplete() {
-    if (!deck.length) {
+    if (!deck.length || gameComplete) {
       return;
     }
     if (deck.every((card) => card.isClicked === true)) {
       if (level === 2) {
         setGameComplete(true);
-        return;
+      } else {
+        showLevelComplete();
+        increaseLevel();
       }
-      showLevelComplete();
-      increaseLevel();
     }
   }
 
@@ -134,21 +126,20 @@ function App() {
   function resetGame() {
     setScore(0);
     setLevel(1);
-    setGameMode(false)
+    setGameMode(false);
     setGameOver(false);
-    setGameComplete(false)
-    setLevelComplete(false)
+    setGameComplete(false);
+    setLevelComplete(false);
     setShuffler(1);
     setDeck(shuffledArrayOfCards());
   }
-  
 
   return (
     <div className="App">
       <Header score={score} bestScore={bestScore}></Header>
       <Gameboard deck={deck} level={level} onClick={handleClick}></Gameboard>
-      {firstTime && <Instruction onClick={handleFirstTime}/>}
-      {gameMode && <GameMode onClick={resetGame} onChange={handleModeChange}/>}
+      {firstTime && <Instruction onClick={handleFirstTime} />}
+      {gameMode && <GameMode onClick={resetGame} onChange={handleModeChange} />}
 
       {levelComplete && <LevelComplete level={level} />}
 
