@@ -9,6 +9,7 @@ import LevelComplete from "./components/LevelComplete";
 import GameOver from "./components/GameOver";
 import GameComplete from "./components/GameComplete";
 import Confetti from "react-confetti";
+import Footer from "./components/Footer";
 
 function App() {
   const [firstTime, setFirstTime] = React.useState(checkFirstTimer());
@@ -196,6 +197,7 @@ function App() {
         />
       )}
       {gameComplete && <Confetti />}
+      <Footer />
     </div>
   );
 }

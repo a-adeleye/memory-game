@@ -72,7 +72,6 @@ header {
   flex-wrap: wrap;
   justify-content: center;
   gap: 1em;
-  opacity: unset;
 }
 
 .card {
@@ -156,6 +155,16 @@ header {
   padding: 1em 3em;
   cursor: pointer;
   font-size: 0.7em;
+}
+
+footer {
+  height: 3em;
+  inset: auto 0 0 0;
+  background-color: #110c2a;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @media (prefers-reduced-motion: no-preference) {
