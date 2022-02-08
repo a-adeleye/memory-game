@@ -5,7 +5,7 @@
 }
 
 html {
-  background: url("bg.jpg") no-repeat center/cover;
+  background: #110c2a url("bg.jpg") no-repeat center/cover;
   transition: 0.4s;
 }
 
