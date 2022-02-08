@@ -8,6 +8,6 @@ You are presented with multiple images that get shuffled everytime they are clic
 
 You CAN NOT click on any image more than once else it's game over. Try to get the highest score possible.
 
-<div align="center"><img src="./src/Screenshot_Memory_ gamet.png" alt="app screenshot" width="1000" /></div>
+<div align="center"><img src="./src/Screenshot_Memory_ game.png" alt="app screenshot" width="1000" /></div>
 
 [Live App here](https://a-adeleye.github.io/memory-game/).
