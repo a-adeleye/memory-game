@@ -1,5 +1,4 @@
 import React from "react";
-import { God, Goddess } from "./Images";
 
 export default function GameMode(props) {
   return (

@@ -11,12 +11,13 @@ import GameComplete from "./components/GameComplete";
 import Confetti from "react-confetti";
 
 function App() {
-  const [firstTime, setFirstTime] = React.useState(checkFirstTimer ());
+  const [firstTime, setFirstTime] = React.useState(checkFirstTimer());
   const [gameMode, setGameMode] = React.useState(false);
   const [mode, setMode] = React.useState(God);
+  const [logoImage, setLogoImage] = React.useState(0);
   const [deck, setDeck] = React.useState([]);
   const [score, setScore] = React.useState(0);
-  const [bestScore, setBestScore] = React.useState(checkBestScore ());
+  const [bestScore, setBestScore] = React.useState(checkBestScore());
   const [level, setLevel] = React.useState(1);
   const [levelComplete, setLevelComplete] = React.useState(false);
   const [shuffler, setShuffler] = React.useState(1);
@@ -24,39 +25,40 @@ function App() {
   const [gameComplete, setGameComplete] = React.useState(false);
 
   const images = [God, Goddess, Movies];
-  const data = {firstTime: false, best: []};
+  const data = { firstTime: false, best: [] };
 
-  function checkFirstTimer () {
-    const data =  JSON.parse(localStorage.getItem('data'));
-    if(!data){
+  function checkFirstTimer() {
+    const data = JSON.parse(localStorage.getItem("data"));
+    if (!data) {
       return true;
     } else {
       return false;
     }
   }
 
-  function checkBestScore () {
-    const data =  JSON.parse(localStorage.getItem('data'));
-    if(!data || !data.best.length){
+  function checkBestScore() {
+    const data = JSON.parse(localStorage.getItem("data"));
+    if (!data || !data.best.length) {
       return [];
     } else {
       return data.best;
     }
   }
 
-  function updateBestScoreToStorage () {
-    const newData = JSON.stringify({...data, best: bestScore});
-    localStorage.setItem('data', newData)
+  function updateBestScoreToStorage() {
+    const newData = JSON.stringify({ ...data, best: bestScore });
+    localStorage.setItem("data", newData);
   }
 
   function handleFirstTime() {
-     localStorage.setItem('data', data)
+    localStorage.setItem("data", data);
     setFirstTime(false);
     setGameMode(true);
   }
 
   function handleModeChange(e) {
     setMode(images[e.target.value]);
+    setLogoImage(e.target.value);
   }
 
   function handleGameMode() {
@@ -64,7 +66,7 @@ function App() {
       setGameOver(false);
     }
     if (gameComplete) {
-      resetGame()
+      resetGame();
     }
     setGameMode((prevValue) => (prevValue = !prevValue));
   }
@@ -86,10 +88,8 @@ function App() {
   }, [score]);
 
   React.useEffect(() => {
-    updateBestScoreToStorage ();
-    console.log('It changed')
-    console.log(bestScore)
-  },[bestScore])
+    updateBestScoreToStorage();
+  }, [bestScore]);
 
   function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -167,7 +167,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header score={score} bestScore={bestScore}></Header>
+      <Header score={score} bestScore={bestScore} mode={logoImage}></Header>
       <Gameboard deck={deck} level={level} onClick={handleClick}></Gameboard>
       {firstTime && <Instruction onClick={handleFirstTime} />}
       {gameMode && <GameMode onClick={resetGame} onChange={handleModeChange} />}

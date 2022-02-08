@@ -25,16 +25,6 @@ header {
   min-width: 27em;
 }
 
-@media only screen and (max-width: 445px) {
-  .logo {
-    display: grid;
-    align-items: center;
-    justify-items: center;
-    padding: 0.5em 2em;
-    font-size: 0.8em;
-  }
-}
-
 .logo--image {
   height: 3.3em;
   width: 3.3em;
@@ -126,7 +116,7 @@ header {
   height: 80%;
   width: 80%;
   background-color: #110c2a;
-  font-size: 1.5em;
+  font-size: 1.2em;
   padding: 1em 3em;
   margin-top: 3em;
 }
@@ -150,6 +140,7 @@ header {
 
 .modal--title {
   color: #fdcc18;
+  text-align: center;
 }
 
 .modal--image {
@@ -188,8 +179,28 @@ header {
     justify-content: center;
     padding: 0.5em 2em;
   }
+}
 
-  /* .levelComplete {
-    inset: 6em 10em;
-  } */
+@media only screen and (max-width: 600px) {
+  .modal {
+    font-size: 1em;
+  }
+}
+
+@media only screen and (max-width: 445px) {
+  .logo {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    padding: 0.5em 2em;
+    font-size: 0.8em;
+  }
+  .modal {
+    font-size: 1em;
+  }
+
+  .modal--button {
+    padding: 1em 1em;
+    font-size: 1em;
+  }
 }
