@@ -1,0 +1,33 @@
+{
+  "files": {
+    "main.css": "/memory-game/static/css/main.778f1d0c.css",
+    "main.js": "/memory-game/static/js/main.cea704c0.js",
+    "static/js/787.69b12325.chunk.js": "/memory-game/static/js/787.69b12325.chunk.js",
+    "static/media/bg.jpg": "/memory-game/static/media/bg.a5a197c87668c49c41c7.jpg",
+    "static/media/goddess-logo.jpg": "/memory-game/static/media/goddess-logo.31d5b1c1da6a994427dc.jpg",
+    "static/media/aladdin.jpg": "/memory-game/static/media/aladdin.9b96d6247e2d475e496e.jpg",
+    "static/media/frozen.jpg": "/memory-game/static/media/frozen.77b8e8ec786ca1a6106d.jpg",
+    "static/media/dolittle.jpg": "/memory-game/static/media/dolittle.8101fd014291d00aa3a6.jpg",
+    "static/media/ne_zha.jpg": "/memory-game/static/media/ne_zha.5144068b21534688bfa9.jpg",
+    "static/media/nemesis.jpg": "/memory-game/static/media/nemesis.0303c108de7ee371ba15.jpg",
+    "static/media/mulan.jpg": "/memory-game/static/media/mulan.bf46249690560f243b63.jpg",
+    "static/media/ratatoskr.jpg": "/memory-game/static/media/ratatoskr.87807a4eb5dee6722a27.jpg",
+    "static/media/aphrodite.jpg": "/memory-game/static/media/aphrodite.816bc38ef7512e22e0e2.jpg",
+    "static/media/awilix.jpg": "/memory-game/static/media/awilix.69f23a83364ab0e9acfc.jpg",
+    "static/media/jumanji.jpg": "/memory-game/static/media/jumanji.04ac2f34492e900c9dd2.jpg",
+    "static/media/zhong.jpg": "/memory-game/static/media/zhong.ef741a61692b5c4e1280.jpg",
+    "static/media/anhur.jpg": "/memory-game/static/media/anhur.493817f109bef8bf1f18.jpg",
+    "static/media/ullr.jpg": "/memory-game/static/media/ullr.311e8e6720cffa3199b9.jpg",
+    "static/media/yemoja.jpg": "/memory-game/static/media/yemoja.b8db789897bfa9dfc6e0.jpg",
+    "static/media/change.jpg": "/memory-game/static/media/change.9301a57767167d3832e0.jpg",
+    "static/media/rama.jpg": "/memory-game/static/media/rama.8b3bc9e3e7324aa6b60a.jpg",
+    "index.html": "/memory-game/index.html",
+    "main.778f1d0c.css.map": "/memory-game/static/css/main.778f1d0c.css.map",
+    "main.cea704c0.js.map": "/memory-game/static/js/main.cea704c0.js.map",
+    "787.69b12325.chunk.js.map": "/memory-game/static/js/787.69b12325.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.778f1d0c.css",
+    "static/js/main.cea704c0.js"
+  ]
+}
