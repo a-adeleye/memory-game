@@ -12,56 +12,65 @@ import Confetti from "react-confetti";
 import Footer from "./components/Footer";
 
 function App() {
-  const [firstTime, setFirstTime] = React.useState(checkFirstTimer());
   const [gameMode, setGameMode] = React.useState(false);
   const [mode, setMode] = React.useState(God);
   const [logoImage, setLogoImage] = React.useState(0);
   const [deck, setDeck] = React.useState([]);
   const [score, setScore] = React.useState(0);
-  const [bestScore, setBestScore] = React.useState(checkBestScore());
-  const [level, setLevel] = React.useState(1);
+  const [scores, setScores] = React.useState([0]);
+  const [gameData, setGameData] = React.useState({
+    firstTime: true,
+    level: 1,
+    best: 0,
+  });
   const [levelComplete, setLevelComplete] = React.useState(false);
   const [shuffler, setShuffler] = React.useState(1);
   const [gameOver, setGameOver] = React.useState(false);
   const [gameComplete, setGameComplete] = React.useState(false);
 
   const images = [God, Goddess, Movies];
-  const data = { firstTime: false, best: [] };
 
   function checkFirstTimer() {
-    const data = localStorage.getItem("data");
-    if (!data) {
-      return true;
+    const checkData = localStorage.getItem("data");
+    if (!checkData) {
+      return;
     } else {
-      return false;
+      let newData = JSON.parse(checkData);
+      setGameData((prev) => {
+        return {
+          ...prev,
+          firstTime: newData.firstTime,
+          level: newData.level,
+          best: newData.best,
+        };
+      });
     }
   }
 
-  function checkBestScore() {
-    const data = localStorage.getItem("data");
-    if (data) {
-      let newData = JSON.parse(data);
-      return newData.best;
-    }
-    if (!data) {
-      return [];
-    }
-  }
+  React.useEffect(() => {
+    checkFirstTimer();
+  }, []);
 
-  function updateBestScoreToStorage() {
-    const newData = JSON.stringify({ ...data, best: bestScore });
+  function updateGameDataToStorage() {
+    const newData = JSON.stringify(gameData);
     localStorage.setItem("data", newData);
   }
 
   function handleFirstTime() {
-    localStorage.setItem("data", JSON.stringify(data));
-    setFirstTime(false);
+    setGameData((prevData) => {
+      return { ...prevData, firstTime: false };
+    });
     setGameMode(true);
   }
 
   function handleModeChange(e) {
     setMode(images[e.target.value]);
     setLogoImage(e.target.value);
+    if (gameData.level > 1) {
+      setGameData((prevData) => {
+        return { ...prevData, level: 1 };
+      });
+    }
   }
 
   function handleGameMode() {
@@ -77,22 +86,28 @@ function App() {
   function shuffledArrayOfCards() {
     const array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
     shuffle(array);
-    const newArray = array.slice(0, level * 2 + 2);
+    const newArray = array.slice(0, gameData.level * 2 + 2);
     return newArray.map((num) => mode[num]);
   }
 
+  // Check this line for change in mode at level higher than 1
+
   React.useEffect(() => {
     setDeck(shuffledArrayOfCards());
-  }, [level, mode]);
+  }, [gameData.level, mode]);
 
   React.useEffect(() => {
     checkLevelComplete();
-    saveGame();
+    setScores((prevScores) => [Math.max(...[...prevScores, score])]);
   }, [score]);
 
   React.useEffect(() => {
-    updateBestScoreToStorage();
-  }, [bestScore]);
+    updateGameDataToStorage();
+  }, [gameData]);
+
+  React.useEffect(() => {
+    updateBestScore();
+  }, [scores]);
 
   function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -115,7 +130,10 @@ function App() {
       )
     );
     calculateScore();
-    saveGame();
+  }
+
+  function calculateScore() {
+    setScore(score + gameData.level);
   }
 
   function checkLevelComplete() {
@@ -123,7 +141,7 @@ function App() {
       return;
     }
     if (deck.every((card) => card.isClicked === true)) {
-      if (level === 7) {
+      if (gameData.level === 7) {
         setGameComplete(true);
       } else {
         showLevelComplete();
@@ -132,25 +150,30 @@ function App() {
     }
   }
 
-  function saveGame() {
-    setBestScore([Math.max(...[...bestScore, score])]);
-  }
-
-  function increaseLevel() {
-    setLevel(level + 1);
-  }
-
   function showLevelComplete() {
     setLevelComplete(true);
     setTimeout(() => setLevelComplete(false), 1500);
   }
 
-  function calculateScore() {
-    setScore(score + level);
+  function increaseLevel() {
+    setGameData((prevData) => {
+      return { ...prevData, level: gameData.level + 1 };
+    });
+  }
+
+  function updateBestScore() {
+    if (!Math.max(...scores)) {
+      return;
+    }
+    setGameData((prevGameData) => {
+      return { ...prevGameData, best: Math.max(...scores) };
+    });
   }
 
   function restartGame() {
-    setLevel(1);
+    setGameData((prevData) => {
+      return { ...prevData, level: 1 };
+    });
     setScore(0);
     setDeck(shuffledArrayOfCards());
     setGameOver(false);
@@ -159,7 +182,9 @@ function App() {
 
   function resetGame() {
     setScore(0);
-    setLevel(1);
+    setGameData((prevData) => {
+      return { ...prevData, level: 1 };
+    });
     setGameMode(false);
     setGameOver(false);
     setGameComplete(false);
@@ -170,18 +195,22 @@ function App() {
 
   return (
     <div className="App">
-      <Header score={score} bestScore={bestScore} mode={logoImage}></Header>
-      <Gameboard deck={deck} level={level} onClick={handleClick}></Gameboard>
-      {firstTime && <Instruction onClick={handleFirstTime} />}
+      <Header score={score} bestScore={gameData.best} mode={logoImage}></Header>
+      <Gameboard
+        deck={deck}
+        level={gameData.level}
+        onClick={handleClick}
+      ></Gameboard>
+      {gameData.firstTime && <Instruction onClick={handleFirstTime} />}
       {gameMode && <GameMode onClick={resetGame} onChange={handleModeChange} />}
 
-      {levelComplete && <LevelComplete level={level} />}
+      {levelComplete && <LevelComplete level={gameData.level} />}
 
       {gameOver && (
         <GameOver
-          level={level}
+          level={gameData.level}
           score={score}
-          best={bestScore}
+          best={gameData.best}
           onClick={restartGame}
           changeGameMode={handleGameMode}
         />
@@ -189,9 +218,9 @@ function App() {
 
       {gameComplete && (
         <GameComplete
-          level={level}
+          level={gameData.level}
           score={score}
-          best={bestScore}
+          best={gameData.best}
           onClick={restartGame}
           changeGameMode={handleGameMode}
         />
