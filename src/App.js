@@ -51,10 +51,13 @@ function App() {
     checkFirstTimer();
   }, []);
 
-  function updateGameDataToStorage() {
-    const newData = JSON.stringify(gameData);
-    localStorage.setItem("data", newData);
-  }
+  React.useEffect(() => {
+    function updateGameDataToStorage() {
+      const newData = JSON.stringify(gameData);
+      localStorage.setItem("data", newData);
+    }
+    updateGameDataToStorage();
+  }, [gameData]);
 
   function handleFirstTime() {
     setGameData((prevData) => {
@@ -90,24 +93,23 @@ function App() {
     return newArray.map((num) => mode[num]);
   }
 
-  // Check this line for change in mode at level higher than 1
-
   React.useEffect(() => {
     setDeck(shuffledArrayOfCards());
   }, [gameData.level, mode]);
 
-  React.useEffect(() => {
-    checkLevelComplete();
-    setScores((prevScores) => [Math.max(...[...prevScores, score])]);
-  }, [score]);
-
-  React.useEffect(() => {
-    updateGameDataToStorage();
-  }, [gameData]);
+  // Check this line for change in mode at level higher than 1
 
   React.useEffect(() => {
     updateBestScore();
   }, [scores]);
+
+  function updateBestScore() {
+    if (score > gameData.best) {
+      setGameData((prevGameData) => {
+        return { ...prevGameData, best: score };
+      });
+    }
+  }
 
   function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -150,6 +152,11 @@ function App() {
     }
   }
 
+  React.useEffect(() => {
+    checkLevelComplete();
+    setScores((prevScores) => [Math.max(...[...prevScores, score])]);
+  }, [score]);
+
   function showLevelComplete() {
     setLevelComplete(true);
     setTimeout(() => setLevelComplete(false), 1500);
@@ -158,15 +165,6 @@ function App() {
   function increaseLevel() {
     setGameData((prevData) => {
       return { ...prevData, level: gameData.level + 1 };
-    });
-  }
-
-  function updateBestScore() {
-    if (!Math.max(...scores)) {
-      return;
-    }
-    setGameData((prevGameData) => {
-      return { ...prevGameData, best: Math.max(...scores) };
     });
   }
 
